@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trip Information Form">
+    <title>Trip Information Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            font-size: 14px;
+        }
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        nav a:hover {
+            background-color: #555;
+        }
+        main {
+            margin-top: 20px;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .form-group {
+            flex: 1 1 250px;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #000000;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="number"],
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .form-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: transparent;
+            background-image: url('data:image/svg+xml,\
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">\
+                    <path d="M10 12l-6-6h12z" fill="#fff"/>\
+                </svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            padding-right: 30px;
+        }
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+       .export-button, .add-row-button, .simple-button, .pdf-button {
+            background-color: #1ba4d1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 14px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .export-button:hover, .add-row-button:hover, .simple-button:hover, .pdf-button:hover {
+            background-color: #006080;
+        }
+            
+            
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+</head>
+<body>
+    <nav>
+        <a href="#">ThruCloud Solutions and Consulting Inc. </a>
+        <a href="#"></a>
+        <a href="#"></a>
+    </nav>
+
+    <main>
+        <form id="tripForm" aria-label="Trip Information Form">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name..." required aria-label="Name">
+            </div>
+            <div class="form-group">
+                <label for="plateNumber">Plate Number:</label>
+                <input type="text" id="plateNumber" name="plateNumber" placeholder="Enter plate number..." required aria-label="Plate Number">
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter phone number..." required aria-label="Phone Number">
+            </div>
+            <div class="form-group">
+                <label for="vehicle">Type of Vehicle:</label>
+                <select id="vehicle" name="vehicle" required aria-label="Type of Vehicle">
+                    <option value="" selected disabled>Select vehicle type...</option>
+                    <option value="Car">Car</option>
+                    <option value="Truck">Truck</option>
+                    <option value="Van">Van</option>
+                    <option value="Motorcycle">Motorcycle</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="helpers">Number of Helpers:</label>
+                <input type="number" id="helpers" name="helpers" min="0" placeholder="Enter number of helpers..." required aria-label="Number of Helpers">
+            </div>
+            <div id="helpersContainer">
+                <!-- Helper fields will be inserted dynamically -->
+            </div>
+            <div class="form-group">
+                <label for="referenceNumber">Reference Number:</label>
+                <input type="text" id="referenceNumber" name="referenceNumber" placeholder="Enter reference number..." required aria-label="Reference Number">
+            </div>
+            
+            
+            <div class="form-group">
+                <label for="trackingNumber">Tracking Number:</label>
+                <input type="text" id="trackingNumber" name="trackingNumber" placeholder="Enter tracking number..." required aria-label="Tracking Number">
+            </div>
+            <div class="form-group">
+                <label for="timeIn">Time In:</label>
+                <input type="text" id="timeIn" name="timeIn" readonly aria-label="Time In">
+            </div>
+            <div class="form-group">
+                <label for="timeOut">Time Out:</label>
+                <input type="text" id="timeOut" name="timeOut" readonly aria-label="Time Out">
+            </div>
+            <div class="form-group">
+                <label for="kmStart">Kilometers Start:</label>
+                <input type="number" id="kmStart" name="kmStart" placeholder="Enter kilometers start..." required aria-label="Kilometers Start">
+            </div>
+            <div class="form-group">
+                <label for="kmEnd">Kilometers End:</label>
+                <input type="number" id="kmEnd" name="kmEnd" placeholder="Enter kilometers end..." required aria-label="Kilometers End">
+            </div>
+            <div class="form-group">
+                <label for="totalKm">Total Kilometers:</label>
+                <input type="number" id="totalKm" name="totalKm" placeholder="Total kilometers will be calculated" readonly aria-label="Total Kilometers">
+            </div>
+        </form>
+            
+            <table id="inputTable">
+                <thead>
+                    <tr>
+                    <th>ITEM NUMBER</th>
+                    <th>Estimated Time of Departure</th>
+                    <th>Estimated Time of Arrival</th>
+                    <th>TIME IN</th>
+                    <th>TIME OUT</th>
+                    <th>KILOMETERS START</th>
+                    <th>KILOMETERS END</th>
+                    <th>ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sample row for demonstration -->
+                <tr>
+                    <td>1</td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td contenteditable="true"></td>
+                    <td><button class="delete-row-button">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button id="addRowButton" class="add-row-button">Add Row</button>
+    </main>
+
+    <button id="exportButton" class="export-button">Export Data to CSV</button>
+
+     <button id="pdfButton" class="pdf-button">Download Table Data as PDF</button>
+    
+    <!-- Button to generate QR code -->
+            <button id="generate-button" class="simple-button">Generate QR</button>
+            <br><br>
+            <!-- Container for QR code -->
+            <div id="qrcode"></div>
+            <br>
+            <!-- Container for the save button -->
+            <div id="generated"></div>
+            
+            <!-- Spinner -->
+            <div id="spinner" style="display: none;">Loading...</div>
+
+    <!-- Updated simple button as a link to qr.html -->
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.js"></script>
+    <script>
+      // Function to get current date and time in YYYY-MM-DD HH:MM format
+        function getCurrentDateTime() {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = (now.getMonth() + 1).toString().padStart(2, '0');
+            var day = now.getDate().toString().padStart(2, '0');
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            return `${year}-${month}-${day} ${hours}:${minutes}`;
+        }
+
+        // Event listener to populate Time Out field with current date and time when changing focus
+        document.getElementById('timeOut').addEventListener('focus', function() {
+            this.value = getCurrentDateTime();
+        });
+
+        // Set initial value for Time In field
+        document.getElementById('timeIn').value = getCurrentDateTime();
+   
+
+        // Function to convert form data and table data to CSV format
+        function convertToCSV(formData, helperNames) {
+            // Form data headers and values
+            const formHeaders = ['NAME', 'PLATE NUMBER', 'PHONE NUMBER', 'VEHICLE', 'NUMBER OF HELPERS', 'HELPER NAMES', 'OTHER HELPERS NAME', 'REFERENCE NUMBER', 'TRACKING NUMBER', 'TIME IN', 'TIME OUT', 'KILOMETERS START', 'KILOMETERS END'];
+            const formValues = [
+                formData.get('name'),
+                formData.get('plateNumber'),
+                formData.get('phoneNumber'),
+                formData.get('vehicle'),
+                formData.get('helpers'),
+                helperNames.join(', '), // Populate helper names as entered by user
+                
+                formData.get('referenceNumber'),
+                formData.get('trackingNumber'),
+                getCurrentDateTime(), // Time In
+                formData.get('timeOut'),
+                formData.get('kmStart'),
+                formData.get('kmEnd')
+            ];
+
+            // Table data headers and values
+            const tableHeaders = ['ITEM NUMBER', 'LOCATION FROM', 'LOCATION TO', 'TIME IN', 'TIME OUT', 'KILOMETERS START', 'KILOMETERS END'];
+
+            // Get table rows
+            const tableRows = Array.from(document.querySelectorAll('#inputTable tbody tr'));
+
+            // Extract data from table rows
+            const tableValues = tableRows.map(row => Array.from(row.cells).slice(1, 7).map(cell => cell.textContent.trim()));
+
+            // Combine all headers and values
+            const rows = [formHeaders, formValues, tableHeaders, ...tableValues];
+
+            // Convert to CSV format
+            let csvContent = 'data:text/csv;charset=utf-8,' + rows.map(e => e.join(',')).join('\n');
+
+            return encodeURI(csvContent);
+        }
+
+        // Function to validate form data
+        function validateForm(formData) {
+            let isValid = true;
+            const requiredFields = ['name', 'plateNumber', 'phoneNumber', 'vehicle', 'helpers', 'referenceNumber', 'trackingNumber', 'timeOut', 'kmStart', 'kmEnd'];
+
+            requiredFields.forEach(field => {
+                if (!formData.get(field)) {
+                    isValid = false;
+                }
+            });
+
+            return isValid;
+        }
+
+        // Event listener for Export Data to CSV button
+        document.getElementById('exportButton').addEventListener('click', function() {
+            var formData = new FormData(document.getElementById('tripForm'));
+
+            // Validate form data
+            if (!validateForm(formData)) {
+                alert('Please fill out all required fields before exporting.');
+                return;
+            }
+
+            // Get helper names from input fields
+            var numberOfHelpers = parseInt(formData.get('helpers'));
+            var helperNames = [];
+            for (var i = 1; i <= numberOfHelpers; i++) {
+                var helperName = formData.get('helper' + i);
+                helperNames.push(helperName);
+            }
+
+            // Convert data to CSV format and trigger download
+            var csvContent = convertToCSV(formData, helperNames);
+            var link = document.createElement('a');
+            link.setAttribute('href', csvContent);
+            link.setAttribute('download', 'Trip Record.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // Event listener for Add Row button
+        document.getElementById('addRowButton').addEventListener('click', function() {
+            var table = document.getElementById('inputTable').getElementsByTagName('tbody')[0];
+            var numRows = table.rows.length + 1;
+
+            var newRow = table.insertRow();
+            for (var j = 0; j < 7; j++) {
+                var cell = newRow.insertCell();
+                if (j === 0) {
+                    cell.textContent = numRows; // ITEM NUMBER
+                } else {
+                    var input = document.createElement('td');
+                    input.contentEditable = true;
+                    cell.appendChild(input);
+                }
+            }
+            var deleteCell = newRow.insertCell();
+            deleteCell.innerHTML = '<button class="delete-row-button">Delete</button>';
+        });
+
+        // Event listener for Number of Helpers field change
+        document.getElementById('helpers').addEventListener('change', function() {
+            var numberOfHelpers = parseInt(this.value);
+            var helpersContainer = document.getElementById('helpersContainer');
+            helpersContainer.innerHTML = ''; // Clear previous content
+
+            // Generate helper fields dynamically
+            for (var i = 1; i <= numberOfHelpers; i++) {
+                var helperInput = document.createElement('input');
+                helperInput.type = 'text';
+                helperInput.name = 'helper' + i;
+                helperInput.placeholder = 'Enter helper ' + i + ' name...';
+                helperInput.required = true;
+
+                var helperLabel = document.createElement('label');
+                helperLabel.textContent = 'Helper ' + i + ':';
+
+                var helperDiv = document.createElement('div');
+                helperDiv.classList.add('form-group');
+                helperDiv.appendChild(helperLabel);
+                helperDiv.appendChild(helperInput);
+
+                helpersContainer.appendChild(helperDiv);
+            }
+        });
+
+        // Populate Time Out field with current date and time when changing focus
+        document.getElementById('timeOut').addEventListener('focus', function() {
+            this.value = getCurrentDateTime();
+        });
+
+        // Event listener for deleting table rows
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('delete-row-button')) {
+                var row = event.target.closest('tr');
+                row.remove();
+            }
+        });
+
+        // Event listener for updating Total Kilometers based on Kilometers End
+        document.getElementById('kmEnd').addEventListener('input', function() {
+            updateTotalKilometers();
+        });
+
+        // Function to update Total Kilometers field
+        function updateTotalKilometers() {
+            var kmStart = parseInt(document.getElementById('kmStart').value) || 0;
+            var kmEnd = parseInt(document.getElementById('kmEnd').value) || 0;
+            var totalKm = kmEnd - kmStart;
+            
+            document.getElementById('totalKm').value = totalKm;
+        }
+
+        // Initial population of table with rows (assuming 1 initial row)
+        document.addEventListener('DOMContentLoaded', function() {
+            var table = document.getElementById('inputTable').getElementsByTagName('tbody')[0];
+
+            // Define the number of initial rows
+            var numRows = 0;
+
+            // Create initial rows
+            for (var i = 1; i <= numRows; i++) {
+                var row = table.insertRow();
+                for (var j = 0; j < 7; j++) {
+                    var cell = row.insertCell();
+                    if (j === 0) {
+                        cell.textContent = i; // ITEM NUMBER
+                    } else {
+                        var input = document.createElement('td');
+                        input.contentEditable = true;
+                        cell.appendChild(input);
+                    }
+                }
+                var deleteCell = row.insertCell();
+                deleteCell.innerHTML = '<button class="delete-row-button">Delete</button>';
+            }
+        });
+
+        // QR code generation and handling
+        function generateQR() {
+            function showSpinner() {
+                document.getElementById("spinner").style.display = "block";
+            }
+
+            function hideSpinner() {
+                document.getElementById("spinner").style.display = "none";
+            }
+
+            function onGenerateSubmit(event) {
+                event.preventDefault();
+                const formData = new FormData(event.target);
+
+                showSpinner();
+
+                fetch('https://api.qrserver.com/v1/create-qr-code/', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.blob())
+                .then(blob => {
+                    const saveUrl = URL.createObjectURL(blob);
+                    saveQR(saveUrl);
+                })
+                .catch(error => {
+                    console.error('Error generating QR code:', error);
+                    hideSpinner();
+                    alert('Failed to generate QR code. Please try again.');
+                });
+            }
+
+            function saveQR(saveUrl) {
+                const link = document.createElement("a");
+                link.id = "save-link";
+                link.classList = 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 rounded w-1/3 m-auto my-5';
+                link.innerHTML = "Save Image";
+                link.href = saveUrl;
+                link.download = "qrcode.png";
+                document.getElementById("generated").appendChild(link);
+
+                hideSpinner();
+            }
+
+            function domReady(fn) {
+                if (
+                    document.readyState === "complete" ||
+                    document.readyState === "interactive"
+                ) {
+                    setTimeout(fn, 1000);
+                } else {
+                    document.addEventListener("DOMContentLoaded", fn);
+                }
+            }
+
+            domReady(function () {
+                function onScanSuccess(decodeText, decodeResult) {
+                    alert("Your QR code content is: " + decodeText);
+                }
+
+                let htmlscanner = new Html5QrcodeScanner(
+                    "my-qr-reader",
+                    { fps: 10, qrbos: 250 }
+                );
+                htmlscanner.render(onScanSuccess);
+            });
+
+            document.getElementById('generateButton').addEventListener('click', onGenerateSubmit);
+        }
+            
+    </script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script>
+        const qr = document.getElementById("qrcode");
+
+        // Button click event for generating QR code
+        document.getElementById("generate-button").addEventListener('click', function() {
+            clearUI();
+
+            const referenceNumber = document.getElementById("referenceNumber").value.trim(); // Get reference number from input
+
+            // Validate input
+            if (referenceNumber === "") {
+                alert("Please enter a Reference Number");
+            } else {
+                showSpinner();
+
+                // Simulate generating QR code (replace with your actual QR code generation logic)
+                setTimeout(() => {
+                    hideSpinner();
+                    generateQRCode(referenceNumber); // Pass reference number to generate QR code
+                    showScanner(); // Optionally show scanner or other UI elements
+                    createSaveBtn(qr.querySelector("canvas").toDataURL()); // Create save button after generating QR code
+                }, 1000); // Simulating 1 second delay for demonstration
+            }
+        });
+
+        // Function to generate QR code
+        function generateQRCode(data) {
+            new QRCode(qr, {
+                text: data,
+                width: 200, // Default size set to 200x200
+                height: 200,
+            });
+        }
+
+        // Function to clear QR code and save button
+        function clearUI() {
+            qr.innerHTML = "";
+            const saveBtn = document.getElementById("save-link");
+            if (saveBtn) {
+                saveBtn.remove();
+            }
+        }
+
+        // Function to show scanner (replace with your implementation if needed)
+        function showScanner() {
+            // Implementation to show scanner or handle UI after generating QR code
+        }
+
+        // Function to create save button to download QR code as image
+        function createSaveBtn(saveUrl) {
+            const link = document.createElement("a");
+            link.id = "save-link";
+            link.classList = 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 rounded w-1/3 m-auto my-5';
+            link.innerHTML = "Save Image";
+            link.href = saveUrl;
+            link.download = "qrcode.png";
+            document.getElementById("generated").appendChild(link);
+        }
+
+        // Function to show spinner
+        function showSpinner() {
+            document.getElementById("spinner").style.display = "block";
+        }
+
+        // Function to hide spinner
+        function hideSpinner() {
+            document.getElementById("spinner").style.display = "none";
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const pdfButton = document.getElementById('pdfButton');
+        const tripForm = document.getElementById('tripForm');
+        const inputTable = document.getElementById('inputTable');
+        const qrCodeContainer = document.getElementById('qrcode');
+
+        pdfButton.addEventListener('click', async function () {
+            const filename = 'trip_data.pdf';
+
+            try {
+                const opt = {
+                    margin: 0.5,
+                    filename: filename,
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                };
+                
+                // Generate QR code image data URL
+                const qrCodeImage = qrCodeContainer.querySelector('canvas').toDataURL('image/jpeg');
+
+                // Collect form data
+                const formData = new FormData(tripForm);
+                let formDataContent = '<h2>Trip Information</h2>';
+                for (let [key, value] of formData.entries()) {
+                    formDataContent += `<p><strong>${key.toUpperCase()}:</strong> ${value}</p>`;
+                }
+
+                // Collect table data
+                let tableDataContent = '<h2>Table Data</h2><table>';
+                tableDataContent += '<thead><tr>';
+                inputTable.querySelectorAll('th').forEach(th => {
+                    tableDataContent += `<th>${th.textContent}</th>`;
+                });
+                tableDataContent += '</tr></thead><tbody>';
+                inputTable.querySelectorAll('tbody tr').forEach(tr => {
+                    tableDataContent += '<tr>';
+                    tr.querySelectorAll('td').forEach(td => {
+                        tableDataContent += `<td>${td.textContent}</td>`;
+                    });
+                    tableDataContent += '</tr>';
+                });
+                tableDataContent += '</tbody></table>';
+
+                // Combine all content
+                const content = `<div>${formDataContent}</div><div>${tableDataContent}</div><div><img src="${qrCodeImage}"></div>`;
+
+                // Generate PDF
+                await html2pdf().set(opt).from(content).save();
+            } catch (error) {
+                console.error('Error:', error.message);
+                alert('Failed to generate PDF. Please try again.');
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
